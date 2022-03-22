@@ -88,7 +88,7 @@ class Config:
     GREY = (128, 128, 128)
     FPS = 30
     TILE_SIZE = 32
-    MAX_GRAVITY = -3
+    MAX_GRAVITY = -10
 
 
 class Game:
@@ -109,8 +109,12 @@ class Game:
         self.player = PlayerSprite(self, 10, 10)
         for i in range(20):
             GroundSprite(self, i, 12)
-        for i in range(5, 10):
+        for i in range(15):
             GroundSprite(self, i, 9)
+        for i in range(10):
+            GroundSprite(self, i, 6)
+        for i in range(5):
+            GroundSprite(self, i, 3)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -121,7 +125,7 @@ class Game:
         self.all_sprites.update()
 
     def draw(self):
-        self.screen.fill(Config.BLACK)
+        self.screen.fill(Config.GREY)
         self.all_sprites.draw(self.screen)
         pygame.display.update()
 
