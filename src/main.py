@@ -2,22 +2,42 @@ import pygame
 
 import sys
 
+class Spritesheet:
+    def __init__(self, file):
+        self.sheet = pygame.image.load(file).convert()
+
+    def get_sprite(self, x, y, width, height):
+        sprite = pygame.Surface([width, height])
+        sprite.blit(self.sheet, (0, 0), (x, y, width, height))
+        sprite.set_colorkey(Config.WHITE)
+        return sprite
+
+
+
+class Config:
+    TILE_SIZE = 32
+    WINDOW_WIDTH = TILE_SIZE * 20
+    WINDOW_HEIGHT = TILE_SIZE * 10
+    BLACK = (0, 0, 0)
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    GREY = (128, 128, 128)
+    WHITE = (255, 255, 255)
+    FPS = 30
+    BG_SPEED = 1
+
+
 
 class BaseSprite(pygame.sprite.Sprite):
-    def __init__(self, game, x, y, x_pos=0, y_pos=0, x_shift=0, y_shift=0,
-            x_scale=1, y_scale=1, layer=0, groups=None, spritesheet=None):
+    def __init__(self, game, x, y, x_pos=0, y_pos=0, width=Config.TILE_SIZE, height=Config.TILE_SIZE, layer=0, groups=None, spritesheet=None):
         self._layer = layer
         groups = (game.all_sprites, ) if groups == None else (game.all_sprites, groups)
         super().__init__(groups)
         self.game = game
-
-        x = x * Config.TILE_SIZE
-        y = y * Config.TILE_SIZE
-        self.width = Config.TILE_SIZE * x_scale
-        self.height = Config.TILE_SIZE * y_scale
-
-        self.x_pos = x_pos * Config.TILE_SIZE + x_shift
-        self.y_pos = y_pos * Config.TILE_SIZE + y_shift
+        self.x_pos = x_pos
+        self.y_pos = y_pos
+        self.width = width
+        self.height = height
 
         if spritesheet == None:
             self.image = pygame.Surface([self.width, self.height])
@@ -31,30 +51,43 @@ class BaseSprite(pygame.sprite.Sprite):
                 self.height
             )
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = x * Config.TILE_SIZE
+        self.rect.y = y * Config.TILE_SIZE
+
+    def scale(self, factor=2):
+        self.rect.width *= factor
+        self.rect.height *= factor
+        self.image = pygame.transform.scale(self.image, (self.rect.width, self.rect.height))
 
 
 class PlayerSprite(BaseSprite):
-    def __init__(self, game, x, y):
-        super().__init__(game, x, y, groups=game.players, layer=1)
-        self.y_velocity = Config.MAX_GRAVITY
-        self.speed = 5
-        self.standing = False
+    def __init__(self, game, x, y, **kwargs):
+        img_data = {
+            'spritesheet': Spritesheet("res/player.png"),
+        }
+        super().__init__(game, x, y, groups=game.players, layer=1, **img_data, **kwargs)
+        self.speed = 3
         self.color = Config.RED
-        self.image.fill(self.color)
+        self.anim_counter = 0
+        self.animation_frames = [0, 32]
+        self.current_frame = 0
+        self.animation_duration = 30
         
 
+    def animate(self, x_diff):
+        self.anim_counter += abs(x_diff)
+        new_frame = round(self.anim_counter / self.animation_duration) % len(self.animation_frames)
+        if self.current_frame != new_frame:
+            new_pos = self.animation_frames[new_frame]
+            self.image = self.spritesheet.get_sprite(new_pos, self.y_pos, self.width, self.height)
+            self.current_frame = new_frame
+            self.anim_counter = self.anim_counter % (len(self.animation_frames) * self.animation_duration)
+
+    
     def update(self):
         self.handle_movement()
-        self.rect.y = self.rect.y - self.y_velocity
         self.check_collision()
-        self.y_velocity = max(self.y_velocity - 0.5, Config.MAX_GRAVITY)
 
-    def jump(self):
-        if self.standing:
-            self.y_velocity = 10
-            self.standing = False
 
     def handle_movement(self):
         keys = pygame.key.get_pressed()
@@ -62,15 +95,66 @@ class PlayerSprite(BaseSprite):
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
             self.rect.x = self.rect.x + self.speed
-        if keys[pygame.K_SPACE]:
-            self.jump()
+        if keys[pygame.K_UP]:
+            self.rect.y = self.rect.y - self.speed
+        if keys[pygame.K_DOWN]:
+            self.rect.y = self.rect.y + self.speed
+        self.update_camera()
+
+
+    def update_camera(self):
+        x_c, y_c = self.game.screen.get_rect().center
+        x_diff = x_c - self.rect.centerx
+        y_diff = y_c - self.rect.centery
+        for sprite in self.game.all_sprites:
+            sprite.rect.x += x_diff
+            sprite.rect.y += y_diff
+        self.animate(x_diff)
+
+        # Shift Background
+        self.game.bg_x += x_diff * Config.BG_SPEED
+        if self.game.bg_x > Config.WINDOW_WIDTH:
+            self.game.bg_x = -Config.WINDOW_WIDTH
+        elif self.game.bg_x < -Config.WINDOW_WIDTH:
+            self.game.bg_x = Config.WINDOW_WIDTH
+
+
+    def is_standing(self, hit):
+        if abs(hit.rect.top - self.rect.bottom) > abs(self.speed):
+            return False
+        if abs(self.rect.left - hit.rect.right) <= abs(self.speed):
+            return False
+        if abs(hit.rect.left - self.rect.right) <= abs(self.speed):
+            return False
+        return True
+
+    def hit_head(self, hit):
+        if abs(self.rect.top - hit.rect.bottom) > abs(self.speed):
+            return False
+        if abs(self.rect.left - hit.rect.right) <= abs(self.speed):
+            return False
+        if abs(hit.rect.left - self.rect.right) <= abs(self.speed):
+            return False
+        return True
+
 
     def check_collision(self):
         hits = pygame.sprite.spritecollide(self, self.game.ground, False)
         for hit in hits:
-            if hit.rect.top >= self.rect.bottom + Config.MAX_GRAVITY:
+            if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
-                self.standing = True
+                break
+            if self.hit_head(hit):
+                self.rect.top = hit.rect.bottom
+                break
+
+        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        for hit in hits:
+            hit_dir = hit.rect.x - self.rect.x
+            if hit_dir < 0:
+                self.rect.left = hit.rect.right
+            else:
+                self.rect.right = hit.rect.left
 
 
 class GroundSprite(BaseSprite):
@@ -98,6 +182,18 @@ class Game:
         self.font = pygame.font.Font(None, 30)
         self.screen = pygame.display.set_mode( (Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT) ) 
         self.clock = pygame.time.Clock()
+        self.bg = pygame.image.load("res/bg-small.png")
+        self.bg_x = 0
+
+    
+    def load_map(self, mapfile):
+        with open(mapfile, "r") as f:
+            for (y, lines) in enumerate(f.readlines()):
+                for (x, c) in enumerate(lines):
+                    if c == "b":
+                        GroundSprite(self, x, y)
+                    if c == "p":
+                        self.player = PlayerSprite(self, x, y)
 
     def new(self):
         self.playing = True
@@ -106,15 +202,7 @@ class Game:
         self.ground = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
 
-        self.player = PlayerSprite(self, 10, 10)
-        for i in range(20):
-            GroundSprite(self, i, 12)
-        for i in range(15):
-            GroundSprite(self, i, 9)
-        for i in range(10):
-            GroundSprite(self, i, 6)
-        for i in range(5):
-            GroundSprite(self, i, 3)
+        self.load_map("maps/level-01.txt")
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -125,7 +213,13 @@ class Game:
         self.all_sprites.update()
 
     def draw(self):
-        self.screen.fill(Config.GREY)
+        self.screen.blit(self.bg, (self.bg_x, 0))
+        tmp_bg = pygame.transform.flip(self.bg, True, False)
+        second_x = Config.WINDOW_WIDTH + self.bg_x
+        if self.bg_x > 0:
+            second_x -= 2*Config.WINDOW_WIDTH
+        self.screen.blit(tmp_bg, (second_x, 0))
+
         self.all_sprites.draw(self.screen)
         pygame.display.update()
 
