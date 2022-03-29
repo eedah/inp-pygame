@@ -64,6 +64,9 @@ class PlayerSprite(BaseSprite):
     def __init__(self, game, x, y, **kwargs):
         img_data = {
             'spritesheet': Spritesheet("res/player.png"),
+            'x_pos': 32,
+            'y_pos': 0,
+            
         }
         super().__init__(game, x, y, groups=game.players, layer=1, **img_data, **kwargs)
         self.speed = 3
@@ -161,18 +164,6 @@ class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
         super().__init__(game, x, y, groups=game.ground, layer=0)
         self.image.fill(Config.GREEN)
-
-
-class Config:
-    WINDOW_WIDTH = 640
-    WINDOW_HEIGHT = 420
-    BLACK = (0, 0, 0)
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    GREY = (128, 128, 128)
-    FPS = 30
-    TILE_SIZE = 32
-    MAX_GRAVITY = -10
 
 
 class Game:
