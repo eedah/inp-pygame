@@ -65,7 +65,7 @@ class PlayerSprite(BaseSprite):
     def __init__(self, game, x, y, **kwargs):
         img_data = {
             'spritesheet': Spritesheet("res/player.png"),
-            'x_pos': 32,
+            'x_pos': 25,
             'y_pos': 0,
             
         }
@@ -73,7 +73,7 @@ class PlayerSprite(BaseSprite):
         self.speed = 3
         self.color = Config.RED
         self.anim_counter = 0
-        self.animation_frames = [0, 32]
+        self.animation_frames = [0, 25, 55]
         self.current_frame = 0
         self.animation_duration = 30
         
