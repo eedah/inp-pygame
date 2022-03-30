@@ -1,3 +1,4 @@
+from tkinter import Frame
 import pygame
 
 import sys
@@ -102,8 +103,11 @@ class PlayerSprite(BaseSprite):
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
             self.rect.y = self.rect.y + self.speed
+        if keys[pygame.K_c]:
+            for enemy in self.game.enemies:
+                enemy.flee()
         self.update_camera()
-
+       
 
     def update_camera(self):
         x_c, y_c = self.game.screen.get_rect().center
@@ -165,12 +169,13 @@ class EnemySprite(BaseSprite):
             'spritesheet': Spritesheet("res/player.png"),
         }
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
-        self.speed = 3
+        self.speed = 6
         self.color = Config.RED
         self.anim_counter = 0
         self.animation_frames = [0, 32]
         self.current_frame = 0
         self.animation_duration = 30
+        self.flee_counter = 0
         
 
     def animate(self, x_diff):
@@ -184,10 +189,13 @@ class EnemySprite(BaseSprite):
 
     
     def update(self):
+        if self.flee_counter <= 0:
+            self.speed = 3
+        else:
+            self.flee_counter -= 2
         self.handle_movement()
         self.check_collision()
         self.catched()
-
 
     def handle_movement(self):
         x_c = self.game.screen.get_rect().centerx
@@ -202,7 +210,11 @@ class EnemySprite(BaseSprite):
             self.rect.y += self.speed
 
         if self.rect.y > y_c: 
-            self.rect.y -= self.speed
+            self.rect.y -= self.speed 
+
+    def flee(self):
+        self.speed = -1
+        self.flee_counter = Config.FPS * 5
 
     def catched(self):
         hits = pygame.sprite.spritecollide(self, self.game.players, False)
@@ -312,6 +324,7 @@ class Game:
             self.update()
             self.draw()
             self.clock.tick(Config.FPS)
+        self.new()
 
     
 def main():
