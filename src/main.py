@@ -162,7 +162,7 @@ class PlayerSprite(BaseSprite):
                 self.rect.top = hit.rect.bottom
                 break
 
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             hit_dir = hit.rect.x - self.rect.x
             if hit_dir < 0:
@@ -258,7 +258,7 @@ class EnemySprite(BaseSprite):
 
 
     def check_collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
@@ -267,7 +267,7 @@ class EnemySprite(BaseSprite):
                 self.rect.top = hit.rect.bottom
                 break
 
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             hit_dir = hit.rect.x - self.rect.x
             if hit_dir < 0:
