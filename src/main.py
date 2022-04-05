@@ -66,7 +66,7 @@ class PlayerSprite(BaseSprite):
     def __init__(self, game, x, y, **kwargs):
         img_data = {
             'spritesheet': Spritesheet("res/player.png"),
-            'x_pos': 25,
+            'x_pos': 0,
             'y_pos': 0,
             
         }
@@ -74,7 +74,7 @@ class PlayerSprite(BaseSprite):
         self.speed = 3
         self.color = Config.RED
         self.anim_counter = 0
-        self.animation_frames = [0, 25, 55]
+        self.animation_frames = [0, 32]
         self.current_frame = 0
         self.animation_duration = 30
         
@@ -97,14 +97,19 @@ class PlayerSprite(BaseSprite):
     def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
+            self.y_pos = 65
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
+            self.y_pos = 33
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
+            self.x_pos = 134
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
+            self.x_pos = 170
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
+            
             for enemy in self.game.enemies:
                 if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 2 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 2:
                     enemy.flee()
