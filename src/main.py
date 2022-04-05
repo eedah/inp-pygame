@@ -153,7 +153,7 @@ class PlayerSprite(BaseSprite):
 
 
     def check_collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
@@ -279,8 +279,20 @@ class EnemySprite(BaseSprite):
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, groups=game.ground, layer=0)
-        self.image.fill(Config.GREEN)
+        img_data = {
+            "spritesheet": Spritesheet("res/floor_update.png")
+        }
+        super().__init__(game, x, y, groups=game.ground, layer=0, **img_data)
+
+class StoneSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/floor_update.png"),
+            "y_pos": 32
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+
 
 
 class Game:
@@ -298,8 +310,9 @@ class Game:
         with open(mapfile, "r") as f:
             for (y, lines) in enumerate(f.readlines()):
                 for (x, c) in enumerate(lines):
+                    GroundSprite(self, x, y)
                     if c == "b":
-                        GroundSprite(self, x, y)
+                        StoneSprite(self, x, y)
                     if c == "p":
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
@@ -310,6 +323,7 @@ class Game:
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.ground = pygame.sprite.LayeredUpdates()
+        self.wall = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
