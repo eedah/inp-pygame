@@ -96,21 +96,20 @@ class PlayerSprite(BaseSprite):
     def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.y_pos = 65
+            self.y_pos = 64
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
-            self.y_pos = 33
+            self.y_pos = 32
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
-            self.x_pos = 134
+            self.x_pos = 128
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
-            self.x_pos = 170
+            self.x_pos = 160
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
             
             for enemy in self.game.enemies:
-                self.y_pos = 99
                 if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
                     enemy.flee()
         self.update_camera()
@@ -169,6 +168,14 @@ class PlayerSprite(BaseSprite):
                 self.rect.left = hit.rect.right
             else:
                 self.rect.right = hit.rect.left
+
+class Frogsprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            'spritesheet': Spritesheet("res/frog.png"),
+        }
+
+
 
 class EnemySprite(BaseSprite):
     def __init__(self, game, x, y, **kwargs):
