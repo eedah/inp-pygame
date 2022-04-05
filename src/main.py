@@ -1,3 +1,4 @@
+from calendar import c
 from tkinter import Frame
 import pygame
 
@@ -110,7 +111,7 @@ class PlayerSprite(BaseSprite):
         if keys[pygame.K_c]:
             
             for enemy in self.game.enemies:
-                if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
+                if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 2 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 2:
                     enemy.flee()
         self.update_camera()
        
@@ -183,7 +184,7 @@ class EnemySprite(BaseSprite):
             'spritesheet': Spritesheet("res/player.png"),
         }
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
-        self.speed = 6
+        self.speed = 10
         self.color = Config.RED
         self.anim_counter = 0
         self.animation_frames = [0, 32]
@@ -214,20 +215,21 @@ class EnemySprite(BaseSprite):
     def handle_movement(self):
         x_c = self.game.screen.get_rect().centerx
         y_c = self.game.screen.get_rect().centery
-        if self.rect.x < x_c: 
-            self.rect.x += self.speed
+        if abs(self.rect.x - (x_c +16) ) < Config.TILE_SIZE * 10 and abs(self.rect.y - (y_c +16) ) < Config.TILE_SIZE * 10:
+            if self.rect.x < x_c: 
+                self.rect.x += self.speed
 
-        if self.rect.x > x_c: 
-            self.rect.x -= self.speed
+            if self.rect.x > x_c: 
+                self.rect.x -= self.speed
 
-        if self.rect.y < y_c: 
-            self.rect.y += self.speed
+            if self.rect.y < y_c: 
+                self.rect.y += self.speed
 
-        if self.rect.y > y_c: 
-            self.rect.y -= self.speed 
+            if self.rect.y > y_c: 
+                self.rect.y -= self.speed 
 
     def flee(self):
-        self.speed = -1
+        self.speed = -2
         self.flee_counter = Config.FPS * 5
 
     def catched(self):
