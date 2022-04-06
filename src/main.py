@@ -1,4 +1,3 @@
-from calendar import c
 from tkinter import Frame
 import pygame
 
@@ -97,21 +96,22 @@ class PlayerSprite(BaseSprite):
     def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.y_pos = 64
+            self.y_pos = 65
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
-            self.y_pos = 32
+            self.y_pos = 33
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
-            self.x_pos = 128
+            self.x_pos = 134
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
-            self.x_pos = 160
+            self.x_pos = 170
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
             
             for enemy in self.game.enemies:
-                if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 2 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 2:
+                self.y_pos = 99
+                if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
                     enemy.flee()
         self.update_camera()
        
@@ -153,7 +153,7 @@ class PlayerSprite(BaseSprite):
 
 
     def check_collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
+        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
         for hit in hits:
             if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
@@ -162,7 +162,7 @@ class PlayerSprite(BaseSprite):
                 self.rect.top = hit.rect.bottom
                 break
 
-        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
+        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
         for hit in hits:
             hit_dir = hit.rect.x - self.rect.x
             if hit_dir < 0:
@@ -170,21 +170,13 @@ class PlayerSprite(BaseSprite):
             else:
                 self.rect.right = hit.rect.left
 
-class Frogsprite(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            'spritesheet': Spritesheet("res/frog.png"),
-        }
-
-
-
 class EnemySprite(BaseSprite):
     def __init__(self, game, x, y, **kwargs):
         img_data = {
             'spritesheet': Spritesheet("res/player.png"),
         }
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
-        self.speed = 10
+        self.speed = 6
         self.color = Config.RED
         self.anim_counter = 0
         self.animation_frames = [0, 32]
@@ -215,21 +207,20 @@ class EnemySprite(BaseSprite):
     def handle_movement(self):
         x_c = self.game.screen.get_rect().centerx
         y_c = self.game.screen.get_rect().centery
-        if abs(self.rect.x - (x_c +16) ) < Config.TILE_SIZE * 10 and abs(self.rect.y - (y_c +16) ) < Config.TILE_SIZE * 10:
-            if self.rect.x < x_c: 
-                self.rect.x += self.speed
+        if self.rect.x < x_c: 
+            self.rect.x += self.speed
 
-            if self.rect.x > x_c: 
-                self.rect.x -= self.speed
+        if self.rect.x > x_c: 
+            self.rect.x -= self.speed
 
-            if self.rect.y < y_c: 
-                self.rect.y += self.speed
+        if self.rect.y < y_c: 
+            self.rect.y += self.speed
 
-            if self.rect.y > y_c: 
-                self.rect.y -= self.speed 
+        if self.rect.y > y_c: 
+            self.rect.y -= self.speed 
 
     def flee(self):
-        self.speed = -2
+        self.speed = -1
         self.flee_counter = Config.FPS * 5
 
     def catched(self):
@@ -258,7 +249,7 @@ class EnemySprite(BaseSprite):
 
 
     def check_collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
+        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
         for hit in hits:
             if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
@@ -267,7 +258,7 @@ class EnemySprite(BaseSprite):
                 self.rect.top = hit.rect.bottom
                 break
 
-        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
+        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
         for hit in hits:
             hit_dir = hit.rect.x - self.rect.x
             if hit_dir < 0:
@@ -279,18 +270,10 @@ class EnemySprite(BaseSprite):
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/floor_update.png")
-        }
-        super().__init__(game, x, y, groups=game.ground, layer=0, **img_data)
+        super().__init__(game, x, y, groups=game.ground, layer=0)
+        self.image.fill(Config.GREEN)
 
-class StoneSprite(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/floor_update.png"),
-            "y_pos": 32
-        }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
 
 
 
@@ -302,7 +285,7 @@ class Game:
         self.font = pygame.font.Font(None, 30)
         self.screen = pygame.display.set_mode( (Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT) ) 
         self.clock = pygame.time.Clock()
-        self.bg = pygame.image.load("res/floor_update.png")
+        self.bg = pygame.image.load("res/bg-small.png")
         self.bg_x = 0
 
     
@@ -310,20 +293,19 @@ class Game:
         with open(mapfile, "r") as f:
             for (y, lines) in enumerate(f.readlines()):
                 for (x, c) in enumerate(lines):
-                    GroundSprite(self, x, y)
                     if c == "b":
-                        StoneSprite(self, x, y)
+                        GroundSprite(self, x, y)
                     if c == "p":
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
                         EnemySprite(self, x, y)
+                    
 
     def new(self):
         self.playing = True
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.ground = pygame.sprite.LayeredUpdates()
-        self.wall = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
