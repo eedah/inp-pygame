@@ -228,7 +228,6 @@ class EnemySprite(BaseSprite):
         if hits:
             self.game.playing = False
 
-
     def is_standing(self, hit):
         if abs(hit.rect.top - self.rect.bottom) > abs(self.speed):
             return False
@@ -246,7 +245,6 @@ class EnemySprite(BaseSprite):
         if abs(hit.rect.left - self.rect.right) <= abs(self.speed):
             return False
         return True
-
 
     def check_collision(self):
         hits = pygame.sprite.spritecollide(self, self.game.ground, False)
@@ -267,7 +265,6 @@ class EnemySprite(BaseSprite):
                 self.rect.right = hit.rect.left
 
 
-
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
@@ -283,11 +280,6 @@ class StoneSprite(BaseSprite):
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
-
-
-
-
-
 class Game:
     def __init__(self):
         pygame.init()
@@ -295,7 +287,7 @@ class Game:
         self.font = pygame.font.Font(None, 30)
         self.screen = pygame.display.set_mode( (Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT) ) 
         self.clock = pygame.time.Clock()
-        self.bg = pygame.image.load("res/bg-small.png")
+        self.bg = pygame.image.load("res/floor_update.png")
         self.bg_x = 0
 
     
@@ -309,6 +301,7 @@ class Game:
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
                         EnemySprite(self, x, y)
+                
                     
 
     def new(self):
