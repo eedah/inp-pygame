@@ -270,8 +270,18 @@ class EnemySprite(BaseSprite):
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
-        super().__init__(game, x, y, groups=game.ground, layer=0)
-        self.image.fill(Config.GREEN)
+        img_data = {
+            "spritesheet": Spritesheet("res/floor_update.png")
+        }
+        super().__init__(game, x, y, groups=game.ground, layer=0, **img_data)
+
+class StoneSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/floor_update.png"),
+            "y_pos": 32
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
 
 
