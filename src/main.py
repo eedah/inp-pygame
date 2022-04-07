@@ -272,6 +272,15 @@ class GroundSprite(BaseSprite):
         }
         super().__init__(game, x, y, groups=game.ground, layer=0, **img_data)
 
+class WallSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 0
+        }
+        super().__init__(game, x, y, groups=game.ground, layer=1, **img_data)
+
+
 class StoneSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
@@ -301,6 +310,10 @@ class Game:
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
                         EnemySprite(self, x, y)
+                    if c == "s":
+                        StoneSprite(self, x, y)
+                    if c == "w":
+                        WallSprite(self, x, y)
                 
                     
 
