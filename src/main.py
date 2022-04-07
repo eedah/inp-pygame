@@ -97,16 +97,16 @@ class PlayerSprite(BaseSprite):
     def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.y_pos = 64
+            self.y_pos = 67
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
-            self.y_pos = 32
+            self.y_pos = 34
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
             self.x_pos = 128
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
-            self.x_pos = 160
+            self.x_pos = 96
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
             
