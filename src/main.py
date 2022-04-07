@@ -287,7 +287,7 @@ class GroundSprite(BaseSprite):
 class StoneSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/floor_update.png"),
+            "spritesheet": Spritesheet("res/stones.png"),
             "y_pos": 0
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
