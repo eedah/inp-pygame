@@ -346,7 +346,7 @@ class Game:
         self.screen.blit(tmp_bg, (second_x, 0))
 
         self.all_sprites.draw(self.screen)
-        pygame.display.update()
+        pygame.display.flip()
 
     def game_loop(self):
         while self.playing:
