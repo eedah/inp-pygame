@@ -295,7 +295,7 @@ class Game:
         self.font = pygame.font.Font(None, 30)
         self.screen = pygame.display.set_mode( (Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT) ) 
         self.clock = pygame.time.Clock()
-        self.bg = pygame.image.load("res/floor_update.png")
+        self.bg = pygame.image.load("res/black.png")
         self.bg_x = 0
 
     
@@ -324,7 +324,7 @@ class Game:
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
-        self.load_map("maps/level-01.txt")
+        self.load_map("maps/.txt")
 
     def handle_events(self):
         for event in pygame.event.get():
