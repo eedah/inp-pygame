@@ -171,7 +171,7 @@ class PlayerSprite(BaseSprite):
 class EnemySprite(BaseSprite):
     def __init__(self, game, x, y, **kwargs):
         img_data = {
-            'spritesheet': Spritesheet("res/geistbild.png"),
+            'spritesheet': Spritesheet("res/gohstpic.png"),
             'x_pos': 0,
             'y_pos': 32
         }
