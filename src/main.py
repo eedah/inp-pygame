@@ -324,7 +324,7 @@ class Game:
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
-        self.load_map("maps/.txt")
+        self.load_map("maps/level-01.txt")
 
     def handle_events(self):
         for event in pygame.event.get():
