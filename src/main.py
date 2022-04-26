@@ -94,16 +94,16 @@ class PlayerSprite(BaseSprite):
     def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.y_pos = 65
+            self.y_pos = 64
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
-            self.y_pos = 33
+            self.y_pos = 32
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
-            self.x_pos = 134
+            self.x_pos = 128
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
-            self.x_pos = 170
+            self.x_pos = 96
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
             
@@ -282,8 +282,8 @@ class WallSprite(BaseSprite):
 class StoneSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/floor_update.png"),
-            "y_pos": 32
+            "spritesheet": Spritesheet("res/stones.png"),
+            "y_pos": 0
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
@@ -343,7 +343,7 @@ class Game:
         self.screen.blit(tmp_bg, (second_x, 0))
 
         self.all_sprites.draw(self.screen)
-        pygame.display.update()
+        pygame.display.flip()
 
     def game_loop(self):
         while self.playing:
