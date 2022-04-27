@@ -14,7 +14,6 @@ class Spritesheet:
         return sprite
 
 
-
 class Config:
     TILE_SIZE = 32
     WINDOW_WIDTH = TILE_SIZE * 20
@@ -26,7 +25,6 @@ class Config:
     WHITE = (255, 255, 255)
     FPS = 30
     BG_SPEED = 1
-
 
 
 class BaseSprite(pygame.sprite.Sprite):
@@ -96,16 +94,16 @@ class PlayerSprite(BaseSprite):
     def handle_movement(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.y_pos = 65
+            self.y_pos = 64
             self.rect.x = self.rect.x - self.speed
         if keys[pygame.K_RIGHT]:
-            self.y_pos = 33
+            self.y_pos = 32
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
-            self.x_pos = 134
+            self.x_pos = 128
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
-            self.x_pos = 170
+            self.x_pos = 96
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
             
@@ -153,7 +151,7 @@ class PlayerSprite(BaseSprite):
 
 
     def check_collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
@@ -162,7 +160,7 @@ class PlayerSprite(BaseSprite):
                 self.rect.top = hit.rect.bottom
                 break
 
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             hit_dir = hit.rect.x - self.rect.x
             if hit_dir < 0:
@@ -175,7 +173,7 @@ class EnemySprite(BaseSprite):
         img_data = {
             'spritesheet': Spritesheet("res/gohstpic.png"),
             'x_pos': 0,
-            'y_pos': 32
+            'y_pos': 32       
         }
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
         self.speed = 6
@@ -212,16 +210,19 @@ class EnemySprite(BaseSprite):
         if self.rect.x < x_c: 
             self.y_pos = 32
             self.rect.x += self.speed
+
         if self.rect.x > x_c: 
             self.y_pos = 0
             self.rect.x -= self.speed
+
         if self.rect.y < y_c: 
             self.y_pos = 64
             self.rect.y += self.speed
+
         if self.rect.y > y_c: 
             self.rect.y -= self.speed 
         self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
-        
+
     def flee(self):
         self.speed = -1
         self.flee_counter = Config.FPS * 5
@@ -250,7 +251,7 @@ class EnemySprite(BaseSprite):
         return True
 
     def check_collision(self):
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             if self.is_standing(hit):
                 self.rect.bottom = hit.rect.top
@@ -259,7 +260,7 @@ class EnemySprite(BaseSprite):
                 self.rect.top = hit.rect.bottom
                 break
 
-        hits = pygame.sprite.spritecollide(self, self.game.ground, False)
+        hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             hit_dir = hit.rect.x - self.rect.x
             if hit_dir < 0:
@@ -289,9 +290,9 @@ class PortalSprite(BaseSprite):
             "spritesheet": Spritesheet("res/portal .png"),
             "y_pos": 0
         }
-        super().__init__(game, x, y, groups=game.ground, layer=1, **img_data)
+        super().__init__(game, x, y, groups=game.portal, layer=1, **img_data)
 
-    def update(self):
+def update(self):
         hits = pygame.sprite.spritecollide(self, self.game.players, False)
         if hits:
             self.game.playing = False
@@ -395,8 +396,7 @@ class Game:
         with open(mapfile, "r") as f:
             for (y, lines) in enumerate(f.readlines()):
                 for (x, c) in enumerate(lines):
-                    if c == "b":
-                        GroundSprite(self, x, y)
+                    GroundSprite(self, x, y)
                     if c == "p":
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
@@ -424,12 +424,15 @@ class Game:
                     if c == "x":
                         WallGreySpriteleft(self, x, y)
 
+                                 
 
     def new(self):
         self.playing = True
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.ground = pygame.sprite.LayeredUpdates()
+        self.wall = pygame.sprite.LayeredUpdates()
+        self.portal = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
@@ -452,7 +455,7 @@ class Game:
         self.screen.blit(tmp_bg, (second_x, 0))
 
         self.all_sprites.draw(self.screen)
-        pygame.display.update()
+        pygame.display.flip()
 
     def game_loop(self):
         while self.playing:
