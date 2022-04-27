@@ -292,6 +292,19 @@ class WallSprite(BaseSprite):
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
+class PortalSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/portal .png"),
+            "y_pos": 0
+        }
+        super().__init__(game, x, y, groups=game.ground, layer=1, **img_data)
+
+    def update(self):
+        hits = pygame.sprite.spritecollide(self, self.game.players, False)
+        if hits:
+            self.game.playing = False
+
 class WallSpriteleft(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
@@ -391,8 +404,7 @@ class Game:
         with open(mapfile, "r") as f:
             for (y, lines) in enumerate(f.readlines()):
                 for (x, c) in enumerate(lines):
-                    if c == "b":
-                        GroundSprite(self, x, y)
+                    GroundSprite(self, x, y)
                     if c == "p":
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
@@ -401,15 +413,12 @@ class Game:
                         StoneSprite(self, x, y)
                     if c == "w":
                         WallSprite(self, x, y)
-<<<<<<< HEAD
-                    if c == "f":
+                    if c == "F":
                         FrogSprite(self, x, y)
-
-                    
-                                 
-=======
                     if c == "g":
                         WallGreenSprite(self, x, y)
+                    if c == "o":
+                        PortalSprite(self, x, y)                     
                     if c == "f":
                         WallGreySprite(self, x, y)
                     if c == "r":
@@ -427,7 +436,6 @@ class Game:
                     if c == "x":
                         WallGreySpriteleft(self, x, y)
 
->>>>>>> 6f9cbd22ab13e046c6b9317889032e163ca02824
 
     def new(self):
         self.playing = True
