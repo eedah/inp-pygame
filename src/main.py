@@ -375,7 +375,7 @@ class Game:
                         WallSpriteBush(self, x, y)
                     if c == "o":
                         PortalSprite(self, x, y)                     
-                    if c == "a":
+                    if c == "r":
                         WallSpriteright(self, x, y)
                     if c == "c":
                         WallSpritebottom(self, x, y)
