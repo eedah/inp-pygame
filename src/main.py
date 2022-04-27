@@ -106,7 +106,8 @@ class PlayerSprite(BaseSprite):
             self.y_pos = 128
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
-
+            self.y_pos = 160
+            self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
             for enemy in self.game.enemies:
                 self.y_pos =  99
                 if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
