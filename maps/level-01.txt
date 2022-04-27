@@ -1,20 +1,17 @@
                wwwwwwww
                w      w
-wwwwwwwwwwwwwwww      wwwwwwwwwwwwwwwwwww
-a                     w                 l
-a                  s  w          e      l
-a     wwwwwwwwwwwwwwwww      w      wwwwl
-a     w            w         w          l
-a     w   e        w         w          l
-a     wwwwwww      w     wwwwwwwwww     l
-a     w                  w        w     l
-a     w                  w s      w     l
-a     w    wwwwwwwwwwwwwwwwww     w     l
-a          w                      w     l
-a   e      w                      w     l
-awwwwwwwwwww      wwwwwwwwwwwwwwwww     l
-a                                       l
-a s                                   s l
-ccccccccccccccccc      cccccccccccccccccc
-                w   p  w               
-                cccccccc
+wwwwwwwwwwwwwwww      wwwwwwwwwwwwwwww
+l                  s  w        e     a
+l   wwwwwwwwwwwwwwwwwww    w    wwwwwa
+l   w   e        w         w         a
+l   wwwwwww      w     wwwwwwwwww    a
+l   w                  w s      w    a
+l   w    wwwwwwwwwwwwwwwwww     w    a
+l   e    w                      w    a
+l   e    w                      w    a
+lwwwwwwwww    wwwwwwwwwwwwwwwwwww    a
+l   s                                a
+l                                 s  a
+ccccccccccccccccc    ccccccccccccccccc
+                w p  w               
+                cccccc

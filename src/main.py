@@ -310,7 +310,7 @@ class WallSpritebottom(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
-            "y_pos": 96
+            "y_pos": 0
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
@@ -318,7 +318,7 @@ class WallSpriteright(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
-            "y_pos": 128
+            "y_pos": 96
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
@@ -376,10 +376,10 @@ class WallGreyGreenSprite(BaseSprite):
 class StoneSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/floor_update.png"),
+            "spritesheet": Spritesheet("res/stones.png"),
             "y_pos": 32
         }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+        super().__init__(game, x, y, groups=game.wall, layer=2, **img_data)
 
 class Game:
     def __init__(self):
