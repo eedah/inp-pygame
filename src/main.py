@@ -431,13 +431,13 @@ class Game:
         counter = 0
         
         while True:
-            self.screen.fill(Config.RED)
-            display_text = self.font.render('Press Space to Start...', False, (0, 0, 0))
+            self.screen.fill(Config.BLACK)
+            display_text = self.font.render('Press Space to Start...', False, (225, 225, 225))
             self.screen.blit(display_text, (200, 50))
-            counter_text = self.font.render(f'{counter}', False, (0, 0, 0))
+            counter_text = self.font.render(f'{counter}', False, (225, 225, 225))
             self.screen.blit(counter_text, (200, 100))
             pygame.display.flip()
-            self.clock.tick(1)
+            self.clock.tick(Config.FPS)
             counter += 1
 
             pygame.event.get()
