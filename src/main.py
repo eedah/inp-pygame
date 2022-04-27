@@ -268,6 +268,12 @@ class EnemySprite(BaseSprite):
             else:
                 self.rect.right = hit.rect.left
 
+class FrogSprite(BaseSprite):
+    def __init__(self,game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/frog.png")
+        }
+        super().__init__(game, x, y, layer = 0, **img_data)
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
@@ -405,6 +411,10 @@ class Game:
                         StoneSprite(self, x, y)
                     if c == "w":
                         WallSprite(self, x, y)
+                    if c == "F":
+                        FrogSprite(self, x, y)
+                    if c == "g":
+                        WallGreenSprite(self, x, y)
                     if c == "o":
                         PortalSprite(self, x, y)                     
                     if c == "f":
