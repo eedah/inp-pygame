@@ -287,12 +287,12 @@ class WallSprite(BaseSprite):
 class PortalSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/portal .png"),
+            "spritesheet": Spritesheet("res/portal.png"),
             "y_pos": 0
         }
         super().__init__(game, x, y, groups=game.portal, layer=1, **img_data)
 
-def update(self):
+    def update(self):
         hits = pygame.sprite.spritecollide(self, self.game.players, False)
         if hits:
             self.game.playing = False
