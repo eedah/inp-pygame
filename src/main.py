@@ -14,7 +14,6 @@ class Spritesheet:
         return sprite
 
 
-
 class Config:
     TILE_SIZE = 32
     WINDOW_WIDTH = TILE_SIZE * 20
@@ -26,7 +25,6 @@ class Config:
     WHITE = (255, 255, 255)
     FPS = 30
     BG_SPEED = 1
-
 
 
 class BaseSprite(pygame.sprite.Sprite):
@@ -175,7 +173,7 @@ class EnemySprite(BaseSprite):
         img_data = {
             'spritesheet': Spritesheet("res/gohstpic.png"),
             'x_pos': 0,
-            'y_pos': 32
+            'y_pos': 32       
         }
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
         self.speed = 6
@@ -223,7 +221,7 @@ class EnemySprite(BaseSprite):
 
         if self.rect.y > y_c: 
             self.rect.y -= self.speed 
-            self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
+        self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
 
     def flee(self):
         self.speed = -1
@@ -298,9 +296,9 @@ class PortalSprite(BaseSprite):
             "spritesheet": Spritesheet("res/portal .png"),
             "y_pos": 0
         }
-        super().__init__(game, x, y, groups=game.ground, layer=1, **img_data)
+        super().__init__(game, x, y, groups=game.portal, layer=1, **img_data)
 
-    def update(self):
+def update(self):
         hits = pygame.sprite.spritecollide(self, self.game.players, False)
         if hits:
             self.game.playing = False
@@ -436,6 +434,7 @@ class Game:
                     if c == "x":
                         WallGreySpriteleft(self, x, y)
 
+                                 
 
     def new(self):
         self.playing = True
@@ -443,6 +442,7 @@ class Game:
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.ground = pygame.sprite.LayeredUpdates()
         self.wall = pygame.sprite.LayeredUpdates()
+        self.portal = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
