@@ -386,7 +386,7 @@ class StoneSprite(BaseSprite):
             "spritesheet": Spritesheet("res/stones.png"),
             "y_pos": 32
         }
-        super().__init__(game, x, y, groups=game.wall, layer=2, **img_data)
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
 class Game:
     def __init__(self):
