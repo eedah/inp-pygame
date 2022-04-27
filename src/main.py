@@ -386,7 +386,7 @@ class StoneSprite(BaseSprite):
             "spritesheet": Spritesheet("res/stones.png"),
             "y_pos": 32
         }
-        super().__init__(game, x, y, groups=game.wall, layer=2, **img_data)
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
 class Game:
     def __init__(self):
@@ -459,6 +459,7 @@ class Game:
         self.all_sprites.update()
 
     def draw(self):
+        self.screen.fill(Config.BLACK)
         self.screen.blit(self.bg, (self.bg_x, 0))
         tmp_bg = pygame.transform.flip(self.bg, True, False)
         second_x = Config.WINDOW_WIDTH + self.bg_x
