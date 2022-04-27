@@ -430,6 +430,7 @@ class Game:
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.ground = pygame.sprite.LayeredUpdates()
+        self.wall = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
         self.enemies = pygame.sprite.LayeredUpdates()
 
