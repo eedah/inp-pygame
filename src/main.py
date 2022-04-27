@@ -76,8 +76,8 @@ class PlayerSprite(BaseSprite):
         self.animation_duration = 30
         
 
-    def animate(self, x_diff):
-        self.anim_counter += abs(x_diff)
+    def animate(self, x_diff, y_diff):
+        self.anim_counter += (abs(x_diff) + abs(y_diff))
         new_frame = round(self.anim_counter / self.animation_duration) % len(self.animation_frames)
         if self.current_frame != new_frame:
             new_pos = self.animation_frames[new_frame]
@@ -100,10 +100,10 @@ class PlayerSprite(BaseSprite):
             self.y_pos = 32
             self.rect.x = self.rect.x + self.speed
         if keys[pygame.K_UP]:
-            self.x_pos = 128
+            self.y_pos = 96
             self.rect.y = self.rect.y - self.speed
         if keys[pygame.K_DOWN]:
-            self.x_pos = 96
+            self.y_pos = 128
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
             
@@ -121,7 +121,7 @@ class PlayerSprite(BaseSprite):
         for sprite in self.game.all_sprites:
             sprite.rect.x += x_diff
             sprite.rect.y += y_diff
-        self.animate(x_diff)
+        self.animate(x_diff, y_diff)
 
         # Shift Background
         self.game.bg_x += x_diff * Config.BG_SPEED
@@ -274,7 +274,7 @@ class FrogSprite(BaseSprite):
         img_data = {
             "spritesheet": Spritesheet("res/frog.png")
         }
-        super().__init__(game, x, y, groups=game.froggs, layer = 0, **img_data)
+        super().__init__(game, x, y, groups=game.froggs, layer = 1, **img_data)
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
