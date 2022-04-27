@@ -457,6 +457,7 @@ class Game:
         self.all_sprites.update()
 
     def draw(self):
+        self.screen.fill(Config.BLACK)
         self.screen.blit(self.bg, (self.bg_x, 0))
         tmp_bg = pygame.transform.flip(self.bg, True, False)
         second_x = Config.WINDOW_WIDTH + self.bg_x
