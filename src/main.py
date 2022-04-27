@@ -110,7 +110,7 @@ class PlayerSprite(BaseSprite):
             self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
             for enemy in self.game.enemies:
                 self.y_pos =  99
-                if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
+                if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 3 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 3:
                     enemy.flee()
         self.update_camera()
        
@@ -179,7 +179,7 @@ class EnemySprite(BaseSprite):
         }
 
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
-        self.speed = 6
+        self.speed = 10
         self.color = Config.RED
         self.anim_counter = 0
         self.animation_frames = [0, 32]
