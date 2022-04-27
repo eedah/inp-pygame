@@ -151,6 +151,7 @@ class PlayerSprite(BaseSprite):
 
 
     def check_collision(self):
+        pygame.sprite.spritecollide(self, self.game.froggs, True)
         hits = pygame.sprite.spritecollide(self, self.game.wall, False)
         for hit in hits:
             if self.is_standing(hit):
@@ -273,7 +274,7 @@ class FrogSprite(BaseSprite):
         img_data = {
             "spritesheet": Spritesheet("res/frog.png")
         }
-        super().__init__(game, x, y, layer = 0, **img_data)
+        super().__init__(game, x, y, groups=game.froggs, layer = 0, **img_data)
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
@@ -441,6 +442,7 @@ class Game:
 
         self.all_sprites = pygame.sprite.LayeredUpdates()
         self.ground = pygame.sprite.LayeredUpdates()
+        self.froggs = pygame.sprite.LayeredUpdates()
         self.wall = pygame.sprite.LayeredUpdates()
         self.portal = pygame.sprite.LayeredUpdates()
         self.players = pygame.sprite.LayeredUpdates()
