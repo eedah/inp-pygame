@@ -106,9 +106,9 @@ class PlayerSprite(BaseSprite):
             self.y_pos = 128
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
-            
+
             for enemy in self.game.enemies:
-                self.y_pos = 99
+                self.y_pos =  99
                 if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
                     enemy.flee()
         self.update_camera()

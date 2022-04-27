@@ -7,11 +7,11 @@ a     wwwwwwwwwwwwwwwww      w      wwwwl
 a     w F          w         w          l
 a     w   e        w         w          l
 a     wwwwwww      w  F  wwwwwwwwww     l
-a     w F                w     F  w     l
-aF    w                  w s      w     l
+a     w                  w     F  w     l
+a     w                  w s      w     l
 a     w    wwwwwwwwwwwwwwwwww     w     l
 a          w F                    w     l
-a   e      w                      w     l
+aF  e      w                      w     l
 awwwwwwwwwww      wwwwwwwwwwwwwwwww     l
 a                   F                 F l
 aFs                                   s l
