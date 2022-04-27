@@ -296,7 +296,32 @@ class PortalSprite(BaseSprite):
         if hits:
             self.game.playing = False
 
-class StoneSprite(BaseSprite):
+class WallSpriteleft(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 64
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+
+class WallSpritebottom(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 96
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallSpriteright(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 128
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallGreenSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
@@ -313,6 +338,31 @@ class WallGreySprite(BaseSprite):
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
+
+class WallGreySpriteright(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 64
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+
+class WallGreySpritebottom(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 96
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallGreySpriteleft(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 128
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
 class WallGreyGreenSprite(BaseSprite):
     def __init__(self, game, x, y):
@@ -361,7 +411,19 @@ class Game:
                         WallGreySprite(self, x, y)
                     if c == "r":
                         WallGreyGreenSprite(self, x, y)
-                    
+                    if c == "a":
+                        WallSpriteright(self, x, y)
+                    if c == "c":
+                        WallSpritebottom(self, x, y)
+                    if c == "l":
+                        WallSpriteleft(self, x, y)
+                    if c == "q":
+                        WallGreySpriteright(self, x, y)
+                    if c == "l":
+                        WallGreySpritebottom(self, x, y)
+                    if c == "x":
+                        WallGreySpriteleft(self, x, y)
+
 
     def new(self):
         self.playing = True
