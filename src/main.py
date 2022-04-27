@@ -268,6 +268,12 @@ class EnemySprite(BaseSprite):
             else:
                 self.rect.right = hit.rect.left
 
+class FrogSprite(BaseSprite):
+    def __init__(self,game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/frog.png")
+        }
+        super().__init__(game, x, y, layer = 0, **img_data)
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
@@ -287,12 +293,12 @@ class WallSprite(BaseSprite):
 class PortalSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/portal .png"),
+            "spritesheet": Spritesheet("res/portal.png"),
             "y_pos": 0
         }
         super().__init__(game, x, y, groups=game.portal, layer=1, **img_data)
 
-def update(self):
+    def update(self):
         hits = pygame.sprite.spritecollide(self, self.game.players, False)
         if hits:
             self.game.playing = False
@@ -405,6 +411,10 @@ class Game:
                         StoneSprite(self, x, y)
                     if c == "w":
                         WallSprite(self, x, y)
+                    if c == "F":
+                        FrogSprite(self, x, y)
+                    if c == "g":
+                        WallGreenSprite(self, x, y)
                     if c == "o":
                         PortalSprite(self, x, y)                     
                     if c == "f":
