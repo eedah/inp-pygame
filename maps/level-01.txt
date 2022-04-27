@@ -1,10 +1,10 @@
 bbbbbbbbbbbbbbb
-b                                                                                       
+b
 b
 b                                                                         bbbbbbbbb
-b                                                                                       
-b                                                                                    
-bb b                   e                                              b     
-b w   w  w    b           b                                            bb                                                           b
-b w  p   w   b           b         bbb              b                bbbbb                       bbbb                                    b
+b
+b        
+bb b          f         e                                              b     
+bw    w  w    b           b                                            bb                                                           b
+bw   p   w   b           b         bbb              b                bbbbb                       bbbb                                    b
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb

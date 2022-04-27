@@ -210,16 +210,19 @@ class EnemySprite(BaseSprite):
         if self.rect.x < x_c: 
             self.y_pos = 32
             self.rect.x += self.speed
+
         if self.rect.x > x_c: 
             self.y_pos = 0
             self.rect.x -= self.speed
+
         if self.rect.y < y_c: 
             self.y_pos = 64
             self.rect.y += self.speed
+
         if self.rect.y > y_c: 
             self.rect.y -= self.speed 
-        self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
-        
+            self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
+
     def flee(self):
         self.speed = -1
         self.flee_counter = Config.FPS * 5
@@ -265,6 +268,12 @@ class EnemySprite(BaseSprite):
             else:
                 self.rect.right = hit.rect.left
 
+class FrogSprite(BaseSprite):
+    def __init__(self,game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/frog.png")
+        }
+        super().__init__(game, x, y, layer = 0, **img_data)
 
 class GroundSprite(BaseSprite):
     def __init__(self, game, x, y):
@@ -315,6 +324,9 @@ class Game:
                         StoneSprite(self, x, y)
                     if c == "w":
                         WallSprite(self, x, y)
+                    if c == "f":
+                        FrogSprite(self, x, y)
+
                     
                                  
 
