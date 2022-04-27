@@ -106,7 +106,8 @@ class PlayerSprite(BaseSprite):
             self.y_pos = 128
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
-
+            self.y_pos = 160
+            self.image = self.spritesheet.get_sprite(0, self.y_pos, self.width, self.height)
             for enemy in self.game.enemies:
                 self.y_pos =  99
                 if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
@@ -176,6 +177,7 @@ class EnemySprite(BaseSprite):
             'x_pos': 0,
             'y_pos': 32       
         }
+
         super().__init__(game, x, y, groups=game.enemies, layer=1, **img_data, **kwargs)
         self.speed = 6
         self.color = Config.RED
@@ -308,7 +310,7 @@ class WallSpriteleft(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
-            "y_pos": 64
+            "y_pos": 128
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
@@ -317,7 +319,7 @@ class WallSpritebottom(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
-            "y_pos": 0
+            "y_pos": 96
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
@@ -325,11 +327,11 @@ class WallSpriteright(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
-            "y_pos": 96
+            "y_pos": 64
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
-class WallGreenSprite(BaseSprite):
+class WallSpriteBush(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
             "spritesheet": Spritesheet("res/walls_dirt.png"),
@@ -337,54 +339,11 @@ class WallGreenSprite(BaseSprite):
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
-
-class WallGreySprite(BaseSprite):
+class BlackBlockSprite(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "spritesheet": Spritesheet("res/black_block.png"),
             "y_pos": 0
-        }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
-
-
-class WallGreySpriteright(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/walls_grey.png"),
-            "y_pos": 64
-        }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
-
-
-class WallGreySpritebottom(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/walls_grey.png"),
-            "y_pos": 96
-        }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
-
-class WallGreySpriteleft(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/walls_grey.png"),
-            "y_pos": 128
-        }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
-
-class WallGreyGreenSprite(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/walls_grey.png"),
-            "y_pos": 32
-        }
-        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
-
-class StoneSprite(BaseSprite):
-    def __init__(self, game, x, y):
-        img_data = {
-            "spritesheet": Spritesheet("res/stones.png"),
-            "y_pos": 32
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
@@ -408,34 +367,24 @@ class Game:
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
                         EnemySprite(self, x, y)
-                    if c == "s":
-                        StoneSprite(self, x, y)
                     if c == "w":
                         WallSprite(self, x, y)
                     if c == "F":
                         FrogSprite(self, x, y)
-                    if c == "g":
-                        WallGreenSprite(self, x, y)
+                    if c == "b":
+                        WallSpriteBush(self, x, y)
                     if c == "o":
                         PortalSprite(self, x, y)                     
-                    if c == "f":
-                        WallGreySprite(self, x, y)
-                    if c == "r":
-                        WallGreyGreenSprite(self, x, y)
                     if c == "a":
                         WallSpriteright(self, x, y)
                     if c == "c":
                         WallSpritebottom(self, x, y)
                     if c == "l":
                         WallSpriteleft(self, x, y)
-                    if c == "q":
-                        WallGreySpriteright(self, x, y)
-                    if c == "l":
-                        WallGreySpritebottom(self, x, y)
-                    if c == "x":
-                        WallGreySpriteleft(self, x, y)
-
-                                 
+                    if c == ".":
+                        BlackBlockSprite(self, x, y)
+                    
+     
 
     def new(self):
         self.playing = True

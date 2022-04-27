@@ -1,20 +1,33 @@
-               wwwowwww
-               w      w
-wwwwwwwwwwwwwwww      wwwwwwwwwwwwwwwwwww
-a                     w               F l
-a                 s F w          e      l
-a     wwwwwwwwwwwwwwwww      w      wwwwl
-a     w F          w         w          l
-a     w   e        w         w          l
-a     wwwwwww      w  F  wwwwwwwwww     l
-a     w                  w     F  w     l
-a     w                  w s      w     l
-a     w    wwwwwwwwwwwwwwwwww     w     l
-a          w F                    w     l
-aF  e      w                      w     l
-awwwwwwwwwww      wwwwwwwwwwwwwwwww     l
-a                   F                 F l
-aFs                                   s l
-ccccccccccccccccc      cccccccccccccccccc
-                w   p  w               
-                cccccccc
+............wwwowww
+............l     r
+.............l    r
+............l      r
+............l       r
+............l  F      r
+............l        r
+...........l       r
+............l      r
+wwwwwwwwwwww      wwwwwwwwwwwwwwwwwwwwwww
+l    F                w               F a
+l                 s F w             e   a
+l     wwwwwwwwwwwwwwwww      w      wwwwa
+l     w F          w         w          a
+l     w   e        w         w          a
+l     wwwwwww      w  F  wwwwwwwwww     a
+l     w F                w     F  w     a
+lF    w                  w s      w     a
+l     w    wwwwwwwwwwwwwwwwww     w     a
+l          w F                    w     a
+l   e      w                      w     a
+lwwwwwbwwwww      wwwwwwwbwwwwwwwww     a
+l                   F                 F a
+lF                                      a
+ccccccccccccc     ccccccccccccccccccccccc
+............l     r......................
+...........l     r....rwwwww.............
+............l   r...r   F   a............
+...........l   r..r        a.............
+............l   r         a..............
+............l      rcccccc...............
+............l  p  r......................
+............ccccccc......................
