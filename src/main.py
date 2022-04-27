@@ -106,9 +106,9 @@ class PlayerSprite(BaseSprite):
             self.y_pos = 128
             self.rect.y = self.rect.y + self.speed
         if keys[pygame.K_c]:
-            
+
             for enemy in self.game.enemies:
-                self.y_pos = 99
+                self.y_pos =  99
                 if abs(enemy.rect.x - self.rect.x) < Config.TILE_SIZE * 5 and abs(enemy.rect.y - self.rect.y) < Config.TILE_SIZE * 5:
                     enemy.flee()
         self.update_camera()
@@ -425,10 +425,30 @@ class Game:
             self.draw()
             self.clock.tick(Config.FPS)
         self.new()
+   
+    def welcome(self):
+        counter = 0
+        
+        while True:
+            self.screen.fill(Config.RED)
+            display_text = self.font.render('Press Space to Start...', False, (0, 0, 0))
+            self.screen.blit(display_text, (200, 50))
+            counter_text = self.font.render(f'{counter}', False, (0, 0, 0))
+            self.screen.blit(counter_text, (200, 100))
+            pygame.display.flip()
+            self.clock.tick(1)
+            counter += 1
 
+            pygame.event.get()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                break
     
 def main():
     g = Game()
+
+    g.welcome()
+
     g.new()
 
     g.game_loop()
