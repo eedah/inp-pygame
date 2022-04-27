@@ -428,17 +428,16 @@ class Game:
         self.new()
    
     def welcome(self):
-        counter = 0
+
         
         while True:
-            self.screen.fill(Config.BLACK)
+            img = pygame.image.load("res/titel.png")
+            self.screen.blit(img, (160,50))
             display_text = self.font.render('Press Space to Start...', False, (225, 225, 225))
-            self.screen.blit(display_text, (200, 50))
-            counter_text = self.font.render(f'{counter}', False, (225, 225, 225))
-            self.screen.blit(counter_text, (200, 100))
+            self.screen.blit(display_text, (200, 150))
+            
             pygame.display.flip()
             self.clock.tick(Config.FPS)
-            counter += 1
 
             pygame.event.get()
             keys = pygame.key.get_pressed()
