@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 bbbbbbbbbbbbbbb
 b
 b
@@ -8,3 +9,25 @@ bb b          f         e                                              b
 bw    w  w    b           b                                            bb                                                           b
 bw   p   w   b           b         bbb              b                bbbbb                       bbbb                                    b
 bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+=======
+               wwwwwwww
+               w      w
+wwwwwwwwwwwwwwww      wwwwwwwwwwwwwwwwwww
+a                     w                 l
+a                  s  w          e      l
+a     wwwwwwwwwwwwwwwww      w      wwwwl
+a     w            w         w          l
+a     w   e        w         w          l
+a     wwwwwww      w     wwwwwwwwww     l
+a     w                  w        w     l
+a     w                  w s      w     l
+a     w    wwwwwwwwwwwwwwwwww     w     l
+a          w                      w     l
+a   e      w                      w     l
+awwwwwwwwwww      wwwwwwwwwwwwwwwww     l
+a                                       l
+a s                                   s l
+ccccccccccccccccc      cccccccccccccccccc
+                w   p  w               
+                cccccccc
+>>>>>>> 6f9cbd22ab13e046c6b9317889032e163ca02824

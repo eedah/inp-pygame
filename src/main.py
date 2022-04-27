@@ -14,6 +14,7 @@ class Spritesheet:
         return sprite
 
 
+
 class Config:
     TILE_SIZE = 32
     WINDOW_WIDTH = TILE_SIZE * 20
@@ -25,6 +26,7 @@ class Config:
     WHITE = (255, 255, 255)
     FPS = 30
     BG_SPEED = 1
+
 
 
 class BaseSprite(pygame.sprite.Sprite):
@@ -290,15 +292,89 @@ class WallSprite(BaseSprite):
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
-
-class StoneSprite(BaseSprite):
+class WallSpriteleft(BaseSprite):
     def __init__(self, game, x, y):
         img_data = {
-            "spritesheet": Spritesheet("res/stones.png"),
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 64
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+
+class WallSpritebottom(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 96
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallSpriteright(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 128
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallGreenSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_dirt.png"),
+            "y_pos": 32
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+
+class WallGreySprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
             "y_pos": 0
         }
         super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
+
+class WallGreySpriteright(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 64
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+
+class WallGreySpritebottom(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 96
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallGreySpriteleft(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 128
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class WallGreyGreenSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/walls_grey.png"),
+            "y_pos": 32
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
+
+class StoneSprite(BaseSprite):
+    def __init__(self, game, x, y):
+        img_data = {
+            "spritesheet": Spritesheet("res/floor_update.png"),
+            "y_pos": 32
+        }
+        super().__init__(game, x, y, groups=game.wall, layer=1, **img_data)
 
 class Game:
     def __init__(self):
@@ -315,7 +391,8 @@ class Game:
         with open(mapfile, "r") as f:
             for (y, lines) in enumerate(f.readlines()):
                 for (x, c) in enumerate(lines):
-                    GroundSprite(self, x, y)
+                    if c == "b":
+                        GroundSprite(self, x, y)
                     if c == "p":
                         self.player = PlayerSprite(self, x, y)
                     if c == "e":
@@ -324,11 +401,33 @@ class Game:
                         StoneSprite(self, x, y)
                     if c == "w":
                         WallSprite(self, x, y)
+<<<<<<< HEAD
                     if c == "f":
                         FrogSprite(self, x, y)
 
                     
                                  
+=======
+                    if c == "g":
+                        WallGreenSprite(self, x, y)
+                    if c == "f":
+                        WallGreySprite(self, x, y)
+                    if c == "r":
+                        WallGreyGreenSprite(self, x, y)
+                    if c == "a":
+                        WallSpriteright(self, x, y)
+                    if c == "c":
+                        WallSpritebottom(self, x, y)
+                    if c == "l":
+                        WallSpriteleft(self, x, y)
+                    if c == "q":
+                        WallGreySpriteright(self, x, y)
+                    if c == "l":
+                        WallGreySpritebottom(self, x, y)
+                    if c == "x":
+                        WallGreySpriteleft(self, x, y)
+
+>>>>>>> 6f9cbd22ab13e046c6b9317889032e163ca02824
 
     def new(self):
         self.playing = True
